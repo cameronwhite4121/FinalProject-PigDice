@@ -1,6 +1,20 @@
+/**
+ * This class stores a playerName and a playerScore
+ */
+class Player{
+    playerName:string;
+    playerScore:number;
+    constructor(playerName:string, playerScore:number) {
+        this.playerName = playerName;
+        this.playerScore = playerScore;
+    }
+}
+
 function generateRandomValue(minValue:number, maxValue:number):number{
-    var random = Math.random();
-    
+    var random = Math.floor(Math.random() * 10);
+    while (random < minValue || random > maxValue) {
+        random = Math.floor(Math.random() * 10);
+    }
     //TODO: use random to generate a number between min and max
 
     return random;
@@ -29,7 +43,22 @@ function createNewGame(){
     //set player 1 and player 2 scores to 0
 
     //verify each player has a name
+    let player1Text:string = (<HTMLInputElement>document.getElementById("player1")).value;
+    let player2Text:string = (<HTMLInputElement>document.getElementById("player2")).value;
     //if both players don't have a name display error
+    let namesValid:boolean = true;
+    if(player1Text.trim() == "") {
+        alert("Player 1 can't be empty");
+    }
+    else if(player2Text.trim() == "") {
+        alert("Player 2 can't be empty");
+    }
+    else { // Names are valid
+        // Sets 2 player objects with names = to textboxes, and
+        // initializes scores to 0
+        let player1:Player = new Player(player1Text, 0);
+        let player2:Player = new Player(player2Text, 0);
+    }
 
     //if both players do have a name start the game!
     (<HTMLElement>document.getElementById("turn")).classList.add("open");
