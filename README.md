@@ -1,5 +1,5 @@
 # Pig Dice
-Pig dice is a game you play with a friend, with the goal being to reach 100 points first
+Pig Dice is a game you play with a friend, with the goal being to reach 100 points first
 ## Rules
 The rules are simple
  - First player to reach 100 points wins
@@ -9,3 +9,5 @@ The rules are simple
  - If the player holds, the turn ends and they keep all points earned that turn
 ## The Game
 ![Pig dice](https://github.com/cameronwhite4121/FinalProject-PigDice/assets/143460157/911d0d6b-0ecc-4318-bec4-60e4a7dfc150)
+![pigdice2](https://github.com/cameronwhite4121/Pig-Dice/assets/143460157/3e3c2962-0881-4313-a41e-c79af4513828)
+
