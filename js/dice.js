@@ -4,26 +4,36 @@ class Player {
         this.playerScore = 0;
     }
 }
+class Game {
+    constructor() {
+        this.turnTotal = 0;
+        this.currentRoll = 0;
+        this.currentPlayer = "";
+    }
+}
+let player1 = new Player();
+let player2 = new Player();
+let pigDice = new Game();
 function generateRandomValue(minValue, maxValue) {
     var random = Math.floor(Math.random() * 10);
     while (random < minValue || random > maxValue) {
         random = Math.floor(Math.random() * 10);
     }
-    return random;
-}
-function changePlayers(player1, player2) {
-    let currentPlayerName = document.getElementById("current").innerText;
-    let player1Name = player1.playername;
-    let player2Name = player2.player1Name;
-    if (currentPlayerName == "") {
-        currentPlayerName = player1Name;
+    if (random >= minValue && random <= maxValue) {
+        return random;
     }
-    else if (currentPlayerName == player1Name) {
-        currentPlayerName = player2Name;
+}
+function changePlayers() {
+    if (pigDice.currentPlayer == "") {
+        pigDice.currentPlayer = player1.playerName;
+    }
+    else if (pigDice.currentPlayer == player1.playerName) {
+        pigDice.currentPlayer = player2.playerName;
     }
     else {
-        currentPlayerName = player1Name;
+        pigDice.currentPlayer = player1.playerName;
     }
+    document.getElementById("current").innerText = pigDice.currentPlayer;
 }
 window.onload = function () {
     let newGameBtn = document.getElementById("new_game");
@@ -43,20 +53,33 @@ function createNewGame() {
         alert("Player 2 can't be empty");
         namesValid = false;
     }
-    let player1 = new Player();
-    let player2 = new Player();
     if (namesValid) {
         player1.playerName = player1Text;
         player2.playerName = player2Text;
+        pigDice.currentRoll = 0;
+        pigDice.turnTotal = 0;
         document.getElementById("turn").classList.add("open");
         document.getElementById("total").value = "0";
         document.getElementById("player1").setAttribute("disabled", "disabled");
         document.getElementById("player2").setAttribute("disabled", "disabled");
-        changePlayers(player1, player2);
+        changePlayers();
     }
 }
 function rollDie() {
     let currTotal = parseInt(document.getElementById("total").value);
+    pigDice.currentRoll = generateRandomValue(1, 6);
+    console.log("Die rolled: " + pigDice.currentRoll);
+    if (pigDice.currentRoll == 1) {
+        changePlayers();
+        pigDice.turnTotal = 0;
+        console.log("Current Total: " + pigDice.turnTotal);
+    }
+    else {
+        pigDice.turnTotal += pigDice.currentRoll;
+        console.log("Current Total:" + pigDice.turnTotal);
+    }
+    document.getElementById("die").innerText = pigDice.currentRoll.toString();
+    document.getElementById("total").innerText = pigDice.turnTotal.toString();
 }
 function holdDie() {
 }
