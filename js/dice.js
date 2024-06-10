@@ -1,7 +1,7 @@
 class Player {
-    constructor(playerName, playerScore) {
-        this.playerName = playerName;
-        this.playerScore = playerScore;
+    constructor() {
+        this.playerName = "";
+        this.playerScore = 0;
     }
 }
 function generateRandomValue(minValue, maxValue) {
@@ -11,10 +11,19 @@ function generateRandomValue(minValue, maxValue) {
     }
     return random;
 }
-function changePlayers() {
+function changePlayers(player1, player2) {
     let currentPlayerName = document.getElementById("current").innerText;
-    let player1Name = document.getElementById("player1").value;
-    let player2Name = document.getElementById("player2").value;
+    let player1Name = player1.playername;
+    let player2Name = player2.player1Name;
+    if (currentPlayerName == "") {
+        currentPlayerName = player1Name;
+    }
+    else if (currentPlayerName == player1Name) {
+        currentPlayerName = player2Name;
+    }
+    else {
+        currentPlayerName = player1Name;
+    }
 }
 window.onload = function () {
     let newGameBtn = document.getElementById("new_game");
@@ -28,23 +37,26 @@ function createNewGame() {
     let namesValid = true;
     if (player1Text.trim() == "") {
         alert("Player 1 can't be empty");
+        namesValid = false;
     }
     else if (player2Text.trim() == "") {
         alert("Player 2 can't be empty");
+        namesValid = false;
     }
-    else {
-        let player1 = new Player(player1Text, 0);
-        let player2 = new Player(player2Text, 0);
+    let player1 = new Player();
+    let player2 = new Player();
+    if (namesValid) {
+        player1.playerName = player1Text;
+        player2.playerName = player2Text;
+        document.getElementById("turn").classList.add("open");
+        document.getElementById("total").value = "0";
+        document.getElementById("player1").setAttribute("disabled", "disabled");
+        document.getElementById("player2").setAttribute("disabled", "disabled");
+        changePlayers(player1, player2);
     }
-    document.getElementById("turn").classList.add("open");
-    document.getElementById("total").value = "0";
-    document.getElementById("player1").setAttribute("disabled", "disabled");
-    document.getElementById("player2").setAttribute("disabled", "disabled");
-    changePlayers();
 }
 function rollDie() {
     let currTotal = parseInt(document.getElementById("total").value);
 }
 function holdDie() {
-    changePlayers();
 }
