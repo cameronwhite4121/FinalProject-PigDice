@@ -176,7 +176,7 @@ function holdDie():void{
     }
 
     // test code for ending the game
-    player1.totalScore = 100;
+    // player1.totalScore = 100;
 
     // Check if there's a winner
     if (player1.totalScore >= 100) {
@@ -198,21 +198,13 @@ function holdDie():void{
  * Method is called when a player reaches 100 points
  */
 function resetGame() {
-    player1.playerName = "";
     player1.totalScore = 0;
-    player2.playerName = "";
     player2.totalScore = 0;
-    pigDice.currentPlayer = "";
-    pigDice.currentRoll = 0;
 
     // Resets player score textboxes
     (<HTMLInputElement>document.getElementById("score1")).value = player1.totalScore.toString();
-    (<HTMLInputElement>document.getElementById("score1")).value = player1.totalScore.toString();
+    (<HTMLInputElement>document.getElementById("score2")).value = player2.totalScore.toString();
 
-    // Resets player form textboxes
-    (<HTMLInputElement>document.getElementById("player1")).value = player1.playerName;
-    (<HTMLInputElement>document.getElementById("player2")).value = player2.playerName;
-    
     endTurn();
 }
 
@@ -223,8 +215,10 @@ function endTurn() {
 
     changePlayers();
     pigDice.turnTotal = 0;
+    pigDice.currentRoll = 0;
 
-    // Reset form values
+    // Deliberately want empty string intead of 0 for better indication
+    // the turn ended 
     (<HTMLInputElement>document.getElementById("die")).value = "";
     (<HTMLInputElement>document.getElementById("total")).value = "";   
 }

@@ -91,7 +91,6 @@ function holdDie() {
         pigDice.turnTotal = 0;
         document.getElementById("score2").value = player2.totalScore.toString();
     }
-    player1.totalScore = 100;
     if (player1.totalScore >= 100) {
         alert(player1.playerName + " wins! They're the ultimate pig!");
         resetGame();
@@ -105,21 +104,16 @@ function holdDie() {
     }
 }
 function resetGame() {
-    player1.playerName = "";
     player1.totalScore = 0;
-    player2.playerName = "";
     player2.totalScore = 0;
-    pigDice.currentPlayer = "";
-    pigDice.currentRoll = 0;
     document.getElementById("score1").value = player1.totalScore.toString();
-    document.getElementById("score1").value = player1.totalScore.toString();
-    document.getElementById("player1").value = player1.playerName;
-    document.getElementById("player2").value = player2.playerName;
+    document.getElementById("score2").value = player2.totalScore.toString();
     endTurn();
 }
 function endTurn() {
     changePlayers();
     pigDice.turnTotal = 0;
+    pigDice.currentRoll = 0;
     document.getElementById("die").value = "";
     document.getElementById("total").value = "";
 }
