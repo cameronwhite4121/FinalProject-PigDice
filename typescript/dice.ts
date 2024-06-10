@@ -3,10 +3,10 @@
  */
 class Player{
     playerName:string;
-    playerScore:number;
+    totalScore:number;
     constructor() {
         this.playerName = "";
-        this.playerScore = 0;
+        this.totalScore = 0;
     }
 }
 
@@ -118,6 +118,8 @@ function createNewGame(){
         //lock in player names and then change players
         (<HTMLInputElement>document.getElementById("player1")).setAttribute("disabled", "disabled");
         (<HTMLInputElement>document.getElementById("player2")).setAttribute("disabled", "disabled");
+
+        // Starts the game by injecting data into the Dom
         changePlayers();
     }
 }
@@ -133,30 +135,96 @@ function rollDie():void{
     //  change players
     //  set current total to 0
     if (pigDice.currentRoll == 1) {
-        changePlayers();
-        pigDice.turnTotal = 0;
-        console.log("Current Total: " + pigDice.turnTotal);
+        endTurn();
+        console.log("Current Total: " + pigDice.turnTotal);  
     }
     
     //if the roll is greater than 1
-    //  add roll value to current total
+    // add roll value to current total
+    // and display results
     else {
         pigDice.turnTotal += pigDice.currentRoll;
         console.log("Current Total:" + pigDice.turnTotal);
+
+        //set the die roll to value player rolled
+        //display current total on form
+        (<HTMLInputElement>document.getElementById("die")).value = pigDice.currentRoll.toString();
+        (<HTMLInputElement>document.getElementById("total")).value = pigDice.turnTotal.toString();
     }
-    //set the die roll to value player rolled
-    //display current total on form
-    (<HTMLButtonElement>document.getElementById("die")).innerText = pigDice.currentRoll.toString();
-    (<HTMLButtonElement>document.getElementById("total")).innerText = pigDice.turnTotal.toString();
+    
 }
 
 function holdDie():void{
     //get the current turn total
     //determine who the current player is
     //add the current turn total to the player's total score
+    if (pigDice.currentPlayer == player1.playerName) {
+        // Asign total to correct player's score
+        player1.totalScore += pigDice.turnTotal;
+        // Reset turn total
+        pigDice.turnTotal = 0;
+        // Display total in form
+        (<HTMLInputElement>document.getElementById("score1")).value = player1.totalScore.toString();
+    }
+    else { // pigDice.currentPlayer == player2.playerName
+        // Asign total to correct player's score
+        player2.totalScore += pigDice.turnTotal;
+        // Reset turn total
+        pigDice.turnTotal = 0;
+        // Display total in form
+        (<HTMLInputElement>document.getElementById("score2")).value = player2.totalScore.toString();
+    }
 
-    //reset the turn total to 0
+    // test code for ending the game
+    player1.totalScore = 100;
 
-    //change players
-    //changePlayers();
+    // Check if there's a winner
+    if (player1.totalScore >= 100) {
+        alert(player1.playerName + " wins! They're the ultimate pig!");
+        // Reset all values
+        resetGame();
+    }
+    else if (player2.totalScore >= 100) {
+        alert(player2.playerName + " wins! They're the ultimate pig!");
+        // Reset all values
+        resetGame();
+    }
+    else { // No winner
+        endTurn();
+    }   
+}
+
+/**
+ * Method is called when a player reaches 100 points
+ */
+function resetGame() {
+    player1.playerName = "";
+    player1.totalScore = 0;
+    player2.playerName = "";
+    player2.totalScore = 0;
+    pigDice.currentPlayer = "";
+    pigDice.currentRoll = 0;
+
+    // Resets player score textboxes
+    (<HTMLInputElement>document.getElementById("score1")).value = player1.totalScore.toString();
+    (<HTMLInputElement>document.getElementById("score1")).value = player1.totalScore.toString();
+
+    // Resets player form textboxes
+    (<HTMLInputElement>document.getElementById("player1")).value = player1.playerName;
+    (<HTMLInputElement>document.getElementById("player2")).value = player2.playerName;
+    
+    endTurn();
+}
+
+/**
+ * Changes players, resets turn total, and clears turn form values
+ */
+function endTurn() {
+
+    changePlayers();
+    pigDice.turnTotal = 0;
+
+    // Reset form values
+    (<HTMLInputElement>document.getElementById("die")).value = "";
+    (<HTMLInputElement>document.getElementById("total")).value = "";   
 }

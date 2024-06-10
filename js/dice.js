@@ -1,7 +1,7 @@
 class Player {
     constructor() {
         this.playerName = "";
-        this.playerScore = 0;
+        this.totalScore = 0;
     }
 }
 class Game {
@@ -70,16 +70,56 @@ function rollDie() {
     pigDice.currentRoll = generateRandomValue(1, 6);
     console.log("Die rolled: " + pigDice.currentRoll);
     if (pigDice.currentRoll == 1) {
-        changePlayers();
-        pigDice.turnTotal = 0;
+        endTurn();
         console.log("Current Total: " + pigDice.turnTotal);
     }
     else {
         pigDice.turnTotal += pigDice.currentRoll;
         console.log("Current Total:" + pigDice.turnTotal);
+        document.getElementById("die").value = pigDice.currentRoll.toString();
+        document.getElementById("total").value = pigDice.turnTotal.toString();
     }
-    document.getElementById("die").innerText = pigDice.currentRoll.toString();
-    document.getElementById("total").innerText = pigDice.turnTotal.toString();
 }
 function holdDie() {
+    if (pigDice.currentPlayer == player1.playerName) {
+        player1.totalScore += pigDice.turnTotal;
+        pigDice.turnTotal = 0;
+        document.getElementById("score1").value = player1.totalScore.toString();
+    }
+    else {
+        player2.totalScore += pigDice.turnTotal;
+        pigDice.turnTotal = 0;
+        document.getElementById("score2").value = player2.totalScore.toString();
+    }
+    player1.totalScore = 100;
+    if (player1.totalScore >= 100) {
+        alert(player1.playerName + " wins! They're the ultimate pig!");
+        resetGame();
+    }
+    else if (player2.totalScore >= 100) {
+        alert(player2.playerName + " wins! They're the ultimate pig!");
+        resetGame();
+    }
+    else {
+        endTurn();
+    }
+}
+function resetGame() {
+    player1.playerName = "";
+    player1.totalScore = 0;
+    player2.playerName = "";
+    player2.totalScore = 0;
+    pigDice.currentPlayer = "";
+    pigDice.currentRoll = 0;
+    document.getElementById("score1").value = player1.totalScore.toString();
+    document.getElementById("score1").value = player1.totalScore.toString();
+    document.getElementById("player1").value = player1.playerName;
+    document.getElementById("player2").value = player2.playerName;
+    endTurn();
+}
+function endTurn() {
+    changePlayers();
+    pigDice.turnTotal = 0;
+    document.getElementById("die").value = "";
+    document.getElementById("total").value = "";
 }
