@@ -4,6 +4,8 @@ class Player {
         this.totalScore = 0;
     }
 }
+let player1 = new Player();
+let player2 = new Player();
 class Game {
     constructor() {
         this.turnTotal = 0;
@@ -11,8 +13,6 @@ class Game {
         this.currentPlayer = "";
     }
 }
-let player1 = new Player();
-let player2 = new Player();
 let pigDice = new Game();
 function generateRandomValue(minValue, maxValue) {
     var random = Math.floor(Math.random() * 10);

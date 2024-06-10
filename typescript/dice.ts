@@ -10,6 +10,11 @@ class Player{
     }
 }
 
+// Initialize player objects.
+// Default score is 0, default name is empty string
+let player1:Player = new Player();
+let player2:Player = new Player();
+
 /**
  * Stores turn total which will be used as an accumulator, 
  * current die roll, and current player.
@@ -19,11 +24,6 @@ class Game{
     currentRoll:number = 0;
     currentPlayer:string = "";
 }
-
-// Initialize player objects.
-// Default score is 0, default name is empty string
-let player1:Player = new Player();
-let player2:Player = new Player();
 
 // Instantiate new game class
 // Stores current total and current roll
